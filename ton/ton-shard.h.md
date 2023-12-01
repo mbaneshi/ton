@@ -1,4 +1,6 @@
-[ChatGPT Link](https://chat.openai.com/c/f4c83648-4879-4781-aa68-d213b81029db)
+[ChatGPT Link](https://chat.openai.com/c/f4c83648-4879-4781-aa68-d213b81029db)  
+
+
 This C++ file seems to define several utility functions related to the manipulation of ShardIds, AccountIdPrefixes, and related structures in the TON Blockchain Library. Let's break down some of the key components:
 
 1. **License Information:**
