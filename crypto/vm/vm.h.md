@@ -1353,3 +1353,188 @@ Sure, let's take a closer look at some key methods in the `VmState` class. Due t
   - **Purpose:** Restores the parent VM state based on the result of the child VM execution.
 
 These are summaries of the key methods in the `VmState` class. If you have specific methods or areas you're interested in, feel free to ask for more detailed explanations.
+
+***
+
+
+Certainly, let's go through each method in the `VmState` class and provide a detailed explanation for its purpose and functionality.
+
+### Constructors:
+
+#### 1. `VmState()`
+- **Description:** Default constructor.
+- **Purpose:** Initializes a `VmState` object with default values.
+
+#### 2. `VmState(Ref<CellSlice> _code)`
+- **Description:** Constructor with initial code.
+- **Parameters:**
+  - `_code`: Initial code slice.
+- **Purpose:** Initializes a `VmState` object with the provided code slice.
+
+#### 3. `VmState(Ref<CellSlice> _code, Ref<Stack> _stack, ...)`
+- **Description:** Constructor with various parameters including stack, gas limits, etc.
+- **Parameters:**
+  - `_code`: Initial code slice.
+  - `_stack`: Initial stack.
+  - `...`: Gas limits, flags, data cell, log, libraries, and initialization tuple.
+- **Purpose:** Initializes a `VmState` object with the specified parameters.
+
+#### 4. `VmState(Ref<Cell> code_cell, Args&&... args)`
+- **Description:** Constructor with a code cell.
+- **Parameters:**
+  - `code_cell`: Initial code cell.
+  - `Args&&... args`: Additional arguments.
+- **Purpose:** Initializes a `VmState` object with the given code cell and additional arguments.
+
+### Gas Management:
+
+#### 5. `set_gas_limits(long long _max, long long _limit, long long _credit = 0)`
+- **Description:** Sets gas limits.
+- **Parameters:**
+  - `_max`: Maximum gas allowed.
+  - `_limit`: Gas limit for the current operation.
+  - `_credit`: Gas credited to the current operation.
+- **Purpose:** Configures gas limits for the VM.
+
+#### 6. `consume_gas_chk(long long amount)`
+- **Description:** Consumes gas with a check for sufficiency.
+- **Parameters:**
+  - `amount`: Amount of gas to consume.
+- **Purpose:** Consumes gas and throws an exception if the operation exceeds the remaining gas.
+
+### Control Flow:
+
+#### 7. `init_cp(int new_cp)`
+- **Description:** Initializes the code page.
+- **Parameters:**
+  - `new_cp`: New code page value.
+- **Purpose:** Initializes the VM's code page.
+
+#### 8. `set_cp(int new_cp)`
+- **Description:** Sets the code page.
+- **Parameters:**
+  - `new_cp`: New code page value.
+- **Purpose:** Sets the VM's code page.
+
+#### 9. `get_cp() const`
+- **Description:** Gets the current code page.
+- **Purpose:** Retrieves the current code page.
+
+#### 10. `call(Ref<Continuation> cont)`
+- **Description:** Initiates a function call.
+- **Parameters:**
+  - `cont`: Continuation to call.
+- **Purpose:** Initiates a function call with the specified continuation.
+
+#### 11. `jump(Ref<Continuation> cont)`
+- **Description:** Initiates a jump to a continuation.
+- **Parameters:**
+  - `cont`: Continuation to jump to.
+- **Purpose:** Initiates a jump to the specified continuation.
+
+#### 12. `ret()`
+- **Description:** Initiates a return from a function.
+- **Purpose:** Initiates a return from the current function.
+
+#### 13. `repeat(Ref<Continuation> body, Ref<Continuation> after, long long count)`
+- **Description:** Repeats a block of code.
+- **Parameters:**
+  - `body`: Continuation representing the body of the loop.
+  - `after`: Continuation representing the action after the loop.
+  - `count`: Number of times to repeat.
+- **Purpose:** Repeats the specified block of code a certain number of times.
+
+#### 14. `run()`
+- **Description:** Executes the VM code.
+- **Purpose:** Runs the VM code until completion.
+
+### Stack and Data Manipulation:
+
+#### 15. `get_stack()`
+- **Description:** Gets a reference to the stack.
+- **Purpose:** Provides access to the VM's stack.
+
+#### 16. `get_log() const`
+- **Description:** Gets a reference to the VM log.
+- **Purpose:** Provides access to the VM's log.
+
+#### 17. `get_c(unsigned idx) const`
+- **Description:** Gets a continuation at a specific index.
+- **Parameters:**
+  - `idx`: Index of the continuation.
+- **Purpose:** Retrieves a continuation from the control registers.
+
+#### 18. `set_c(unsigned idx, Ref<Continuation> val)`
+- **Description:** Sets a continuation at a specific index.
+- **Parameters:**
+  - `idx`: Index of the continuation.
+  - `val`: Continuation to set.
+- **Purpose:** Sets a continuation in the control registers.
+
+### Execution and Logging:
+
+#### 19. `run_inner()`
+- **Description:** Executes the inner loop of the VM code.
+- **Purpose:** Runs the inner loop of the VM code.
+
+#### 20. `step()`
+- **Description:** Executes a single step of the VM code.
+- **Purpose:** Advances the VM by one step in execution.
+
+#### 21. `get_steps_count() const`
+- **Description:** Gets the total number of steps executed.
+- **Purpose:** Retrieves the count of executed steps.
+
+#### 22. `get_state_hash() const`
+- **Description:** Gets the hash of the VM state.
+- **Purpose:** Calculates and returns the hash of the current VM state.
+
+#### 23. `lookup_library_in(td::ConstBitPtr key, Ref<Cell> lib_root)`
+- **Description:** Looks up a library based on a key.
+- **Parameters:**
+  - `key`: Key for looking up the library.
+  - `lib_root`: Root of the library.
+- **Purpose:** Looks up and returns a library based on the key.
+
+### Library Management:
+
+#### 24. `register_library_collection(Ref<Cell> lib)`
+- **Description:** Registers a library collection.
+- **Parameters:**
+  - `lib`: Library collection to register.
+- **Purpose:** Adds a library collection to the VM.
+
+#### 25. `load_library(td::ConstBitPtr hash)`
+- **Description:** Loads a library based on its hash.
+- **Parameters:**
+  - `hash`: Hash of the library to load.
+- **Purpose:** Retrieves and loads a library based on its hash.
+
+### Child VM Handling:
+
+#### 26. `run_child_vm(VmState&& new_state, ...)`
+- **Description:** Runs a child VM.
+- **Parameters:**
+  - `new_state`: State of the child VM.
+  - `...`: Flags and options for return values.
+- **Purpose:** Executes a child VM within the context of the parent VM.
+
+#### 27. `restore_parent_vm(int res)`
+- **Description:** Restores the parent VM state after running a child VM.
+- **Parameters:**
+  - `res`: Result code from the child VM.
+- **Purpose:** Restores the parent VM state based on the result of the child VM execution.
+
+### Signature Check:
+
+#### 28. `register_chksgn_call()`
+- **Description:** Registers a signature check call.
+- **Purpose:** Tracks and registers a signature check call.
+
+### Conclusion
+
+:
+
+The `VmState` class is a critical component of the TON Blockchain VM, managing the state, gas consumption, control flow, and interactions with the stack and data. The provided methods cover a wide range of functionalities, from gas management to execution control, making it a comprehensive class for handling VM execution. The explanations here provide an overview of each method's purpose and usage. If you have specific questions or if there's a particular method you want more details on, please let me know.
+
+**
