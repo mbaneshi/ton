@@ -1,4 +1,4 @@
-[adnl-peer-table.h]()
+[adnl-peer-table.h](https://chat.openai.com/c/7910e905-e3aa-4fea-ac07-2e354372b3c9)
 ### adnl-peer-table.h
 
 This C++ code defines a part of a library for handling Asynchronous Distributed Name Ledger (ADNL) in the Telegram Open Network (TON) project. ADNL is a communication protocol used in TON for exchanging messages between nodes in a distributed network.
